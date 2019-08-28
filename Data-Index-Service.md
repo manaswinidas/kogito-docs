@@ -56,7 +56,7 @@ Messaging integration is also provided by Quarkus using `quarkus-smallrye-reacti
 
 You will need:
  - Infinispan server:
-   Download and run https://downloads.jboss.org/infinispan/10.0.0.Beta4/infinispan-server-10.0.0.Beta4.zip.
+   Download and run https://downloads.jboss.org/infinispan/10.0.0.CR1/infinispan-server-10.0.0.CR1.zip.
  Service will be available on port 11222. This should match the setting `quarkus.infinispan-client.server-list=localhost:11222` on `application.properties`.
    To enable our simplified demo setup, go to /server/conf/infinispan.xml and remove the security domain from the endpoints definition:
    ```xml
