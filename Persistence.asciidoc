@@ -2,7 +2,7 @@
 
 Kogito supports (since version 0.3.0) a runtime persistence for workflows. That allows users to configure key value based storage backed by https://infinispan.org[Infinispan] to persist data (including active nodes and process instance variables) to preserve it across restarts.
 
-Version of Infinispan currently used is 10.0.0.Beta4
+Version of Infinispan currently used is 10.0.0.CR1
 
 == Configure
 
