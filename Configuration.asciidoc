@@ -12,7 +12,7 @@ These various items might require dependencies setup, code and configuration in 
 
 ## Registering work item handlers
 
-To be able to use custom service tasks a work item handlers must be registered. Once the work item handler is implemented to can be either packaged in the application itself or as dependency of the application.
+To be able to use custom service tasks a work item handler must be registered. Once the work item handler is implemented to can be either packaged in the application itself or as dependency of the application.
 
 `WorkItemHandlerConfig` class should be created to provide custom work item handlers. It must implement `org.kie.kogito.process.WorkItemHandlerConfig` although recommended is to always extend the default implementation (`org.kie.kogito.process.impl.DefaultWorkItemHandlerConfig`) to benefit from the out of the box provided handlers as well.
 

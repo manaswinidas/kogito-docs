@@ -65,4 +65,4 @@ On top of that, both data index service and timer service provide metrics about 
 
 # Tracing
 
-Every interaction from within process or a decision that results in calling another service should be tracked by default. That means should be equipped with information based on OpenTracing to allow deep dive analysis on service to service interaction using tools like Jeager or Kiali.
+Every interaction from within process or a decision that results in calling another service should be tracked by default. That means should be equipped with information based on OpenTracing to allow deep dive analysis on service to service interaction using tools like Jaeger or Kiali.

@@ -17,7 +17,7 @@ It is also important to note that this service is not intended to be used as per
 ## Technical Overview
 From a technical perspective, the Data Index is a Quarkus application based on VertX and reactive messaging that exposes a GraphQL endpoint, allowing client applications to easily access business domain-specific data as well as technical detailed information about running process instance.
 
-In its current version, it uses Kakfa messaging to consume [CloudEvents](https://cloudevents.io) based messages from Kogito runtimes, process and index the information for later consumption via GraphQL queries.
+In its current version, it uses Kafka messaging to consume [CloudEvents](https://cloudevents.io) based messages from Kogito runtimes, process and index the information for later consumption via GraphQL queries.
 These events contain information about units of work executed for a process. Visit [process-runtime-events](https://github.com/kiegroup/kogito-runtimes/wiki/Configuration#process-runtime-events) for more details about the payload of the messages.
 This data is then parsed and pushed into different Infinispan caches.
 These caches are structured as follows:
@@ -76,7 +76,7 @@ You will need:
    ```
    docker run -p 2181:2181 -p 9092:9092 --env ADVERTISED_HOST=localhost --env ADVERTISED_PORT=9092 spotify/kafka
    ``` 
-   For a compreensive list of options for setting up the Data Index Kafka consumer please visit: [configuring-the-kafka-connector](https://quarkus.io/guides/kafka-guide#configuring-the-kafka-connector) and [Kafka consumer configuration](https://kafka.apache.org/documentation/#consumerconfigs)
+   For a comprehensive list of options for setting up the Data Index Kafka consumer please visit: [configuring-the-kafka-connector](https://quarkus.io/guides/kafka-guide#configuring-the-kafka-connector) and [Kafka consumer configuration](https://kafka.apache.org/documentation/#consumerconfigs)
    
 ### Running
 

@@ -71,7 +71,7 @@
 ### Main themes of the release 
 
 * management console that allows administrators of the business automation to have insights into running services and historical data
-* operator to provision complete environment including sso, management console, task inbox, timer service, and runtime services
+* operator to provision complete environment including SSO, management console, task inbox, timer service, and runtime services
 * multi-tenant task inbox
 * ensure DMN and BPMN integration works
 * temporized rule unit execution through jBPM timer service

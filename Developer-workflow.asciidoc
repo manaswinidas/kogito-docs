@@ -86,7 +86,7 @@ Tests should be written
 
 * as unit tests that test individual process or decision
 * as integration tests that test set of processes and decision working together
-* API tests that test the REST api of the application, this type of tests can also be applied to native images
+* API tests that test the REST API of the application, this type of tests can also be applied to native images
 
 # Development mode
 

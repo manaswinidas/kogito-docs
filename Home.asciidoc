@@ -11,7 +11,7 @@ It originates from well known Open Source projects
 * Drools
 * jBPM
 
-and takes advantage of the good things proves in mission critical systems around the globe. At the same time
+and takes advantage of the good things proven in mission critical systems around the globe. At the same time
 takes an opinionated view on what makes the good business automation solution. Key characteristics of Kogito are
 
 * *cloud first* cloud deployment is the first and foremost target runtime environment
@@ -33,7 +33,7 @@ The easiest way to see it running is by trying the examples. Kogito comes with a
 ** https://github.com/kiegroup/kogito-examples/tree/master/onboarding-example[Quarkus] (both jvm and native image)
 * *basic rule* example illustrates single microservice to expose decision service running on
 ** https://github.com/kiegroup/kogito-examples/tree/master/drools-quarkus-example[Quarkus] (both jvm and native image)
-* *basic process* example illustrates single micoservice to expose business processes as services running on
+* *basic process* example illustrates single microservice to expose business processes as services running on
 ** https://github.com/kiegroup/kogito-examples/tree/master/jbpm-quarkus-example[Quarkus] (both jvm and native image)
 ** https://github.com/kiegroup/kogito-examples/tree/master/jbpm-springboot-example[SpringBoot]
 
