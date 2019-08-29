@@ -62,7 +62,14 @@ You will need:
    ```xml
    <endpoints socket-binding="default">
    ```
-
+   You also need to add a basic template for the indexing cache:
+   ```xml
+   <local-cache-configuration name="kogito-template" statistics="true">
+         <indexing index="ALL">
+            <property name="default.directory_provider">local-heap</property>
+         </indexing>
+   </local-cache-configuration>
+   ```
  - Kafka messaging server:
    The best way to get started is to use the Docker image that already contains all the necessary bits for running Kafka locally.
    For more details visit: https://hub.docker.com/r/spotify/kafka/ 
