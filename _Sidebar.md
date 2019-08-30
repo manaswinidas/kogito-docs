@@ -2,6 +2,7 @@
   <li><a href="https://github.com/kiegroup/kogito-runtimes/wiki">Home</a>
     <ul>
       <li><a href="https://github.com/kiegroup/kogito-runtimes/wiki/Roadmap">Roadmap</a></li>
+      <li><a href="https://github.com/kiegroup/kogito-runtimes/wiki/Events">Events</a></li>
       <li>Usage workflows
       <ul>
         <li><a href="https://github.com/kiegroup/kogito-runtimes/wiki/Developer-workflow">Developer</a></li>
