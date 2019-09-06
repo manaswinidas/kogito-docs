@@ -1,0 +1,25 @@
+Following is a set of configuration parameters that are supported by Kogito.
+These usually are placed in `application.properties` file but Can also be overridden via system properties or environment variables.
+
+= Runtime properties
+
+[cols="20%,60%,20%"]
+|===
+|Name |Description |Since version 
+
+|`kogito.service.url`
+|A URL that identifies where the service is deployed to. Used by runtime events to set the source of the event.
+|0.4.0
+
+|`kogito.persistence.infinispan.template`
+|Optional template name of the Infinispan cache configuration to be used to persist process instance related data
+|0.4.0
+
+|`kogito.events.processinstances.enabled`
+|True or False property instructing if runtime events should be published for process instance, defaults to true
+|0.4.0
+
+|`kogito.events.usertasks.enabled`
+|True or False property instructing if runtime events should be published for user task instance, defaults to true
+|0.4.0
+|===
