@@ -1,15 +1,17 @@
+Looking for slides to present about Kogito?
+* 1-slide overview
+* 10 min overview
+* a more complete 30min presentation
+Take a look [at our slidedeck here](https://docs.google.com/presentation/d/10pZD2Jnw0D2bkhzFkxL9aV3dS6pc_98-2VOmNx4pHsk).
+
+
+***
+
+
 Feel free to submit upcoming events (presentations, workshops, etc.) related to Kogito.
 
 ## Upcoming events related to Kogito
 
-**DevNation Live**: Event-driven business automation powered by cloud native Java (Maciej Swiderski)
-
-September 5th, 2019
-
-[Register here](https://onlinexperiences.com/scripts/Server.nxp?LASCmd=AI:4;F:QS!10100&ShowUUID=F6F282B0-E20C-44C7-822C-90D1B7AFAE04)
-
-
-***
 **Devoxx Belgium 2019**: Event-driven business automation powered by cloud native Java (Mario Fusco, Edoardo Vacchi, Maciej Swiderski)
 
 November 4th- 8th, 2019
@@ -26,6 +28,13 @@ Antwerp, Belgium
 
 ## Past events related to Kogito
 
+**DevNation Live**: Event-driven business automation powered by cloud native Java (Maciej Swiderski)
+
+September 5th, 2019
+
+[Register here to watch the recording](https://onlinexperiences.com/scripts/Server.nxp?LASCmd=AI:4;F:QS!10100&ShowUUID=F6F282B0-E20C-44C7-822C-90D1B7AFAE04)
+
+***
 **Devoxx Poland 2019**: How and why we turned our old Java projects into first-class serverless components (Mario Fusco, Maciej Swiderski)
 
 June 24th - 26th, 2019
