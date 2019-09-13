@@ -12,6 +12,16 @@ Feel free to submit upcoming events (presentations, workshops, etc.) related to 
 
 ## Upcoming events related to Kogito
 
+**TDC - The Developers Conference 2019**: Business Automation in the Cloud with Kogito and Quarkus (Ricardo Zanini, Filippe Spolti)
+
+October 11th, 2019
+
+Recife, Brazil
+
+[Link to presentation details](http://www.thedevelopersconference.com.br/tdc/2019/recife/trilha-cloud-e-containers)
+
+***
+
 **Devoxx Belgium 2019**: Event-driven business automation powered by cloud native Java (Mario Fusco, Edoardo Vacchi, Maciej Swiderski)
 
 November 4th- 8th, 2019
