@@ -192,3 +192,8 @@ public class CustomWorkItemHandlerConfig extends DefaultWorkItemHandlerConfig {{
 ----
 
 Actual work item handler is the same as used by default but instead of the default life cycle you pass as constructor argument custom implementation of the `LifeCycle` interface.
+
+A complete Quickstart showing custom life cycle in action can be found 
+
+* [on Quarkus](https://github.com/mswiderski/kogito-quickstarts/kogito-usertasks-custom-lifecycle-quarkus)
+* [on SpringBoot](https://github.com/mswiderski/kogito-quickstarts/kogito-usertasks-custom-lifecycle-springboot)
