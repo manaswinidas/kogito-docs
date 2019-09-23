@@ -67,6 +67,13 @@ where `.processedtravellers.` is the name that matches the message name of the m
 
 Serialization depends on type of data to be received, it can be based on JSONB that comes with Quarkus Kafka-client extension or it can be any of the standard types Apache Kafka comes with.
 
+Under heavy load for producer there might be error thrown in case the back pressure is overloaded. Use following property to disable waiting for completion which should make the overall throughput higher
+
+[source, plain]
+----
+mp.messaging.outgoing.[channel-name].waitForWriteCompletion=false
+----
+
 
 # SpringBoot 
 
