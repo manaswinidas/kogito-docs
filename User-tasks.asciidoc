@@ -1,0 +1,145 @@
+User tasks play an important role in business processes and are the core construct in Kogito. They are implemented as work item and their execution is defined by work item handler.
+
+# Life cycle
+
+To allow a customisable implementation work item itself has been enhanced to support a life cycle. A life cycle is meant to move a work item across various phases that are not defined at the `WorkItem` interface itself but can be  added on runtime.
+
+Life cycle defines the exact behaviour of a given work item at runtime. It is usually added on top of `WorkItemHandler` to make it pluggable and allow for more flexible runtime characteristics.
+
+`WorkItemHandler` interface has been enhanced to provide option to move between states 
+
+[source, java]
+----
+public void transitionToPhase(WorkItem workItem, WorkItemManager manager, Transition<?> transition)
+----
+
+NOTE: This method is a default method which does nothing when not implemented. It is done like this to keep backward compatibility with already existing work item handler implementations.
+
+Usual implementation of the `transitionToPhase` will look like following
+
+[source, java]
+----
+@Override
+public void transitionToPhase(WorkItem workItem, WorkItemManager manager, Transition<?> transition) {
+
+    lifeCycle.transitionTo(workItem, manager, (Transition<Map<String, Object>>) transition);
+}
+----
+
+where `lifeCycle` is an implementation of `org.kie.kogito.process.workitem.LifeCycle<T>` that actually defined the execution semantics.
+
+## Life cycle phases
+
+These states are defined as life cycle phases and there are several of them provided out of the box
+
+* *Active* - initial state when work item is activated
+* *Abort* - abnormal completion of the work item
+* *Complete* - normal completion of the work item
+
+NOTE: Above list applies to any work item and thus can be used not only with user tasks but any other tasks that require life cycle management.
+
+Below is a list of life cycle phases dedicated to user tasks
+
+* *Claim* - assigns given work item to particular actor, restricting access to anyone else
+* *Release* - unassigns given work item from particular actor, making it available for any other potential user or group to work on it (by claiming or completing)
+* *Skip* - skips given work item
+
+Further life cycle phases can also be defined to meet business needs.
+
+## Base human task life cycle
+
+A default implementation of the human task life cycle is provided by `org.jbpm.process.instance.impl.humantask.BaseHumanTaskLifeCycle`. It supports following life cycle phases
+
+* Active
+* Claim
+* Release
+* Complete
+* Skip
+* Abort
+
+At the beginning human task enters <pre>Active</pre> phase. From there it can go to
+
+* Claim
+* Complete
+* Skip
+* Abort
+
+at any time. At each phase data can be associated and by that set on work item.
+
+### Authorization
+
+`org.jbpm.process.instance.impl.humantask.BaseHumanTaskLifeCycle` is equipped with few checks to make sure that work item is worked by people that are eligible to work on it.
+
+As soon as there are any input data given that defines user/group assignment will enforce the authorisation check.
+
+Following are the ways to pass in user/group assignments
+
+[cols="20%,60%,20%"]
+|===
+|Parameter name |Description |Example value 
+
+|ActorId
+|Comma separated list of users to be potential owners, supports expressions
+|John,Mary,#{actor}
+
+|GroupId
+|Comma separated list of groups that members of can be potential owners, supports expressions
+|mangers,#{mygroup}
+
+|BusinessAdministratorId
+|Comma separated list of users that can administrate this task, supports expressions
+|Administrator,#{adminuser}
+
+|BusinessAdministratorGroupId
+|Comma separated list of groups that members of can be administrators of the task, supports expressions
+|admins,#{admingroup}
+
+|ExcludedOwnerId
+|Comma separated list of users that cannot work on this task, supports expressions
+|poul,#{lastactor}
+
+|===
+
+NOTE: Authorization is only enforced when the method that calls the work item life cycle methods come with security context. This is dependent on the api being used.
+
+### Example
+
+Following is an example of the API used to interact with work item using life cycle phases
+
+[source, java]
+----
+// start process instance
+ProcessInstance<?> processInstance = approvalsProcess.createInstance(m);
+processInstance.start();
+
+// setup security policy with identity information
+StaticIdentityProvider identity = new StaticIdentityProvider("admin", Collections.singletonList("managers"));
+SecurityPolicy policy = SecurityPolicy.of(identity);
+
+// get list of work items taking security restrictions into account
+List<WorkItem> workItems = processInstance.workItems(policy);
+
+// work on a task
+final String wiId = workItems.get(0).getId();
+processInstance.transitionWorkItem(wiId, 
+                                   new HumanTaskTransition(Start.ID, null, policy));
+
+processInstance.transitionWorkItem(wiId, 
+                                   new HumanTaskTransition(Complete.ID, Collections.singletonMap("approved", false), policy));                
+----
+
+When interacting with user tasks over REST api users can provide following query params to provide user and group information
+
+[cols="20%,60%,20%"]
+|===
+|Parameter name |Description |Multi value supported 
+
+|user
+|User name to be used for user task authorisation check
+|No
+
+|group
+|Zero or more groups to be used for user task authorisation check
+|Yes
+
+|===
