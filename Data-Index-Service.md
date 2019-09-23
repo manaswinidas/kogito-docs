@@ -24,6 +24,7 @@ These caches are structured as follows:
  - Domain cache: This cache is a generic cache, one per process id, where the process instance variables are pushed as the root content. This cache also includes
 some process instance metadata, which allows correlating data between domain and process instances. Data is transferred as JSON format to Infinispan server as a concrete Java type is not available. 
  - Process instance cache: Each process instance is pushed here containing all information, not only metadata, that includes extra information such as nodes executed.
+ - User Task instance cache: Each user task instance is pushed here containing all information, not only metadata, that includes extra information such as inputs and outputs.
 
 Storage is provided by [Infinispan](https://infinispan.org/) which enables a cloud-ready and scalable persistence, as well as [Lucene](https://lucene.apache.org/) based indexing. Communication between the Index Service and Infinispan is handled via [Protocol Buffers](https://developers.google.com/protocol-buffers/).
 
@@ -95,6 +96,8 @@ In there you can explore the current types available using the Docs section on t
 Some examples:
 
 #### Querying the technical cache
+
+##### Process instances
 ```graphql
 {
   ProcessInstances {
@@ -110,6 +113,20 @@ Some examples:
       name
       type
     }
+  }
+}
+```  
+##### User Task instances
+```graphql
+{
+  UserTaskInstances {
+    id
+    name
+    actualOwner
+    description
+    priority
+    processId
+    processInstanceId
   }
 }
 ```  
@@ -135,6 +152,20 @@ The provided GraphQL schema also allows for further filtering of the results. A 
     processId
     state
     variables
+  }
+}
+``` 
+
+```graphql
+{
+  UserTaskInstances(filter: {actualOwner: "kogito", state: "InProgress"}) {
+    id
+    name
+    actualOwner
+    description
+    priority
+    processId
+    processInstanceId
   }
 }
 ``` 
@@ -207,6 +238,19 @@ Filtering the domain-specific cache is, at this stage, open to a simple string, 
   }
 }
 ``` 
+* List the flight details related to a specific user task instance.
+```graphql
+{
+  Travels(query: "from org.acme.travels.travels.Travels t where t.userTasks.id:'abb9f626-8a54-444d-943a-25b969a2cd1c'") {
+    flight {
+      flightNumber
+      arrival
+      departure
+    }
+  }
+}
+``` 
+
 
 #### Loading proto files from the file system
 To bootstrap the service using a set of proto files from a folder, simply pass the following property `kogito.protobuf.folder` and any .proto file contained in the folder will automatically be loaded when the application starts.
