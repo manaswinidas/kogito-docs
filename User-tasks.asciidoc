@@ -195,5 +195,5 @@ Actual work item handler is the same as used by default but instead of the defau
 
 A complete Quickstart showing custom life cycle in action can be found 
 
-* [on Quarkus](https://github.com/mswiderski/kogito-quickstarts/kogito-usertasks-custom-lifecycle-quarkus)
-* [on SpringBoot](https://github.com/mswiderski/kogito-quickstarts/kogito-usertasks-custom-lifecycle-springboot)
+* https://github.com/mswiderski/kogito-quickstarts/kogito-usertasks-custom-lifecycle-quarkus[for Quarkus]
+* https://github.com/mswiderski/kogito-quickstarts/kogito-usertasks-custom-lifecycle-springboot[for SpringBoot]
