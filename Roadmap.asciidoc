@@ -35,16 +35,16 @@
 ### Main themes of the release 
 
 * variable tagging to allow adding labels to variables to describe their relevance
-* configurable human tasks life cycle to allow control over what is needed to work on user-assigned tasks
-* data index service searching capabilities based on domain data
-* operator provision data index and runtime storage on demand
-* operator discover and automatically register metrics endpoints in OpenShift provisioned Prometheus
-* integrate Rules with jBPM codegen
-* expose KieBase and KieSession configuration options also in Rule Units
-* remove MVEL dependency
-* first automatically generated REST endpoint for DMN 
-* BPMN VSCode editor alpha version
-* DMN VSCode editor alpha version
+* [x] configurable human tasks life cycle to allow control over what is needed to work on user-assigned tasks
+* [ ] data index service searching capabilities based on domain data
+* [x] operator provision data index and runtime storage on demand
+* [ ] operator discover and automatically register metrics endpoints in OpenShift provisioned Prometheus
+* [x] integrate Rules with jBPM codegen
+* [x] expose KieBase and KieSession configuration options also in Rule Units
+* [ ] remove MVEL dependency
+* [x] first automatically generated REST endpoint for DMN 
+* [x] BPMN VSCode editor alpha version
+* [ ] DMN VSCode editor alpha version
 
 # 0.5.0
 
@@ -53,6 +53,7 @@
 ### Main themes of the release 
 
 * management console that allows administrators of the business automation to have insights into running services and historical data
+* data index service searching capabilities based on domain data
 * timer and job service + timers in the process at least intermediate and boundary timers
 * operator to provision timer service on-demand, meaning only then runtime service uses timers and de-provision when no longer needed
 * published version of VSCode editors for BPMN and DMN
@@ -63,6 +64,9 @@
 * DMN Operator
 * DMN support in Quarkus Extension (dev mode)
 * operator to provision SSO and inject system tokens into containers so they can interact smoothly
+* operator discover and automatically register metrics endpoints in OpenShift provisioned Prometheus
+* remove MVEL dependency
+* DMN VSCode editor alpha version
 
 # 0.6.0
 
@@ -77,7 +81,7 @@
 * temporized rule unit execution through jBPM timer service
 * management console: lightweight "explainable AI"; tracing rule execution
 * parallel execution of rule units (prototype) 
-
+* open tracing for any service interaction from within a process or decision
 
 # 1.0.0
 
