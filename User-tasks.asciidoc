@@ -143,3 +143,52 @@ When interacting with user tasks over REST api users can provide following query
 |Yes
 
 |===
+
+## Create custom life cycle and phase
+
+Users might want to extend the life cycle to be used for handling user tasks by implementing 
+
+* Life cycle phase(s)
+* Life cycle 
+
+### Implement life cycle phase(s)
+
+To provide additional life cycle phases, you need to implement `org.kie.kogito.process.workitem.LifeCyclePhase`.
+
+There are several methods to be implemented:
+
+* `id` - to be unique as it is used when transitioning
+* `canTransition` - provides a check point between phases - if this phase can be transitioned from given phase
+* `status` - that defines human readable status for this phase
+* `isTerminating` - that determines if this phase is a completion stage, if so it will complete work item and move on to next activity in the process
+* `apply` - optional method that allows to perform additional updates to the work item upon transition e.g. set extra data etc
+
+NOTE: You can implement as many phases as needed or extend existing ones.
+
+### Implement life cycle
+
+Once there is a need to have additional phases covered or have another way of handling human task life cycle a custom implementation of `org.kie.kogito.process.workitem.LifeCycle<Map<String, Object>>` can be provided.
+
+NOTE: To support human task the parameterised type of `LifeCycle` must be `Map<String, Object>`.
+
+There are several methods to be implemented
+
+* `phaseById` - retrieves phase by id - this us used to verify if given phase is supported by given life cycle implementation 
+* `phases` - returns all supported phases by given life cycle implementation 
+* `transitionTo` - provides main logic to handle phase transition
+* `data` - returns the current state of data for given work item
+
+### Configure to use custom LifeCycle
+
+Once the implementation for life cycle and phases is done it needs to be configured for the runtime to use it instead of the default one. This is done in exact same way as for any other work item handler via WorkItemHandlerConfig class
+
+[source,java]
+----
+
+@ApplicationScoped
+public class CustomWorkItemHandlerConfig extends DefaultWorkItemHandlerConfig {{
+    register("Human Task", new HumanTaskWorkItemHandler(new CustomHumanTaskLifeCycle()));
+}}
+----
+
+Actual work item handler is the same as used by default but instead of the default life cycle you pass as constructor argument custom implementation of the `LifeCycle` interface.
