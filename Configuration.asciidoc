@@ -345,20 +345,24 @@ mp.messaging.outgoing.kogito-usertaskinstances-events.value.serializer=org.apach
 
 ----
 
-Start the application and on each request (that actually modifies the state of a process instance) you should see new messages to show up on the `kogito-processinstances-events` topic.
+Start the application and on each request (that actually modifies the state of a process instance) you should see new messages to show up on the `kogito-processinstances-events` topic. In addition, whenever there are user tasks interactions new messages should show up on 'kogito-usertaskinstances-events' topic.
 
 Under heavy load for producer there might be error thrown in case the back pressure is overloaded. Use following property to disable waiting for completion which should make the overall throughput higher
 
 [source, plain]
 ----
 mp.messaging.outgoing.kogito-processinstances-events.waitForWriteCompletion=false
+mp.messaging.outgoing.kogito-usertaskinstances-events.waitForWriteCompletion=false
 ----
 
 ### Configure event publisher for SprintBoot based runtime
 
 #### Install and configure Apache Kafka
 
-Install Apache Kafka in the preferred way and create new topic named `kogito-processinstances-events`
+Install Apache Kafka in the preferred way and create new topics named 
+
+* `kogito-processinstances-events`
+* `kogito-usertaskinstances-events`
 
 #### Add dependency
 
