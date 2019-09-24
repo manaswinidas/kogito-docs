@@ -128,7 +128,11 @@ Runtimes can produce events based on processed data. Currently this mainly appli
 
 ### Process runtime events
 
-Runtime engine can emit events based on the execution context of given request (aka unit of work). The main aim for these events is to notify 3rd parties about changes to the process instance and its data. To avoid too many events being sent and to optimise both producer and consumer side there will be only one event per process instance emitted. 
+Runtime engine can emit events based on the execution context of given request (aka unit of work). The main aim for these events is to notify 3rd parties about changes to the process instance and its data. 
+
+#### Process Instance Events
+
+To avoid too many events being sent and to optimise both producer and consumer side there will be only one event per process instance emitted. 
 
 That event will consists of relevant information such as
 
@@ -210,6 +214,83 @@ The event itself is in format of CloudEvent so can be easily consumed, it comes 
 * kogitoRootProcessinstanceId
 * kogitoProcessId
 * kogitoProcessinstanceState
+* type of the event is set to `ProcessInstanceEvent`
+
+#### User Task Instance Events
+
+In addition to process instance events, in case given execution (unit of work) makes any interactions with user tasks then additional event (one for each user task) will be produced.
+
+That event will consists of relevant information such as
+
+* task metadata such as name, description, priority, start and complete dates
+* task input and output data
+* task assignments actual owner, potential users and groups, business admin and business admin groups, excluded users
+* task reference name that should be used to interact with the task via runtime service's endpoints
+
+[source, json]
+----
+{
+  "data": {
+    "adminGroups": [],
+    "adminUsers": [],
+    "excludedUsers": [],
+    "id": "4d899471-19dd-485d-b7f4-b313185d430d",
+    "inputs": {
+      "Locale": "en-UK",
+      "trip": {
+        "begin": "2019-09-22T22:00:00Z[UTC]",
+        "city": "Boston",
+        "country": "US",
+        "end": "2019-09-26T22:00:00Z[UTC]",
+        "visaRequired": true
+      },
+      "TaskName": "VisaApplication",
+      "NodeName": "Apply for visa",
+      "Priority": "1",
+      "Skippable": "true",
+      "traveller": {
+        "address": {
+          "city": "Krakow",
+          "country": "Poland",
+          "street": "Polna",
+          "zipCode": "12345"
+        },
+        "email": "jan.kowalski@email.com",
+        "firstName": "Jan",
+        "lastName": "Kowalski",
+        "nationality": "Polish"
+      }
+    },
+    "outputs": {},
+    "potentialGroups": [],
+    "potentialUsers": [],
+    "processId": "travels",
+    "processInstanceId": "63c297cb-f5ac-4e20-8254-02f37bd72b80",
+    "referenceName": "VisaApplication",
+    "startDate": "2019-09-16T15:22:26.658Z[UTC]",
+    "state": "Ready",
+    "taskName": "Apply for visa",
+    "taskPriority": "1"
+  },
+  "id": "9c340cfa-c9b6-46f2-a048-e1114b077a7f",
+  "kogitoProcessId": "travels",
+  "kogitoProcessinstanceId": "63c297cb-f5ac-4e20-8254-02f37bd72b80",
+  "kogitoUserTaskinstanceId": "4d899471-19dd-485d-b7f4-b313185d430d",
+  "kogitoUserTaskinstanceState": "Ready",
+  "source": "http://localhost:8080/travels",
+  "specversion": "0.3",
+  "time": "2019-09-16T17:22:26.662592+02:00[Europe/Berlin]",
+  "type": "UserTaskInstanceEvent"
+}
+----
+
+The event itself is in format of CloudEvent so can be easily consumed, it comes with few extensions to allow event routing based on the event metadata without looking into the body of the event
+
+* kogitoUserTaskinstanceId
+* kogitoUserTaskinstanceState
+* kogitoProcessinstanceId
+* kogitoProcessId
+* type of the event is set to `UserTaskInstanceEvent`
 
 ### Publishing events
 
@@ -327,3 +408,10 @@ public class KafkaProducerConfig {
 ----
 
 Start the application and on each request (that actually modifies the state of a process instance) you should see new messages to show up on the `kogito-processinstances-events` topic.
+
+## Control event publishing
+
+There are several application properties that allow to control the event publishing
+
+* `kogito.events.processinstances.enabled` - allows to enable/disable publishing process instance events, defaults to true
+* `kogito.events.usertasks.enabled` - allows to enable/disable publishing user task instance events, defaults to true
