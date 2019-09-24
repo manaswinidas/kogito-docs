@@ -60,9 +60,8 @@
 * BPMN/DMN chrome extension alpha
 * migrate jBPM use of rule flow groups to rule units
 * conditional rule execution using jBPM as coordinator
-* Drools Operator
-* DMN Operator
 * DMN support in Quarkus Extension (dev mode)
+* operator to deploy a Kogito Runtime Service based on local DMN and BPMN files
 * operator to provision SSO and inject system tokens into containers so they can interact smoothly
 * operator discover and automatically register metrics endpoints in OpenShift provisioned Prometheus
 * remove MVEL dependency
