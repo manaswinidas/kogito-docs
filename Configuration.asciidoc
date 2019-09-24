@@ -307,7 +307,10 @@ Additional event producers can be developed by implementing `org.kie.kogito.even
 
 #### Install and configure Apache Kafka
 
-Install Apache Kafka in the preferred way and create new topic named `kogito-processinstances-events`
+Install Apache Kafka in the preferred way and create new topics named 
+
+* `kogito-processinstances-events`
+* `kogito-usertaskinstances-events`
 
 #### Add dependency
 
@@ -335,6 +338,11 @@ Edit `application.properties` file located under `src/main/resources` and add fo
 mp.messaging.outgoing.kogito-processinstances-events.connector=smallrye-kafka
 mp.messaging.outgoing.kogito-processinstances-events.topic=kogito-processinstances-events
 mp.messaging.outgoing.kogito-processinstances-events.value.serializer=org.apache.kafka.common.serialization.StringSerializer
+
+mp.messaging.outgoing.kogito-usertaskinstances-events.connector=smallrye-kafka
+mp.messaging.outgoing.kogito-usertaskinstances-events.topic=kogito-usertaskinstances-events
+mp.messaging.outgoing.kogito-usertaskinstances-events.value.serializer=org.apache.kafka.common.serialization.StringSerializer
+
 ----
 
 Start the application and on each request (that actually modifies the state of a process instance) you should see new messages to show up on the `kogito-processinstances-events` topic.
