@@ -18,7 +18,7 @@ October 11th, 2019
 
 Recife, Brazil
 
-[Link to presentation details](http://www.thedevelopersconference.com.br/tdc/2019/recife/trilha-cloud-e-containers)
+[Link to presentation details](http://www.thedevelopersconference.com.br/tdc/2019/recife/trilha-cloud-e-containers#descricao-122)
 
 ***
 
