@@ -31,10 +31,6 @@ Add following into the pom.xml of the application.
   <groupId>io.quarkus</groupId>
   <artifactId>quarkus-smallrye-reactive-messaging-kafka</artifactId>
 </dependency>
-<dependency>
-  <groupId>io.quarkus</groupId>
-  <artifactId>quarkus-kafka-client</artifactId>
-</dependency>
 ----
 
 #### Configure messaging channel
@@ -47,12 +43,11 @@ Add following for message start event
 ----
 mp.messaging.incoming.travellers.connector=smallrye-kafka
 mp.messaging.incoming.travellers.topic=travellers
-mp.messaging.incoming.travellers.value.deserializer=org.acme.travel.json.TravellerJsonbDeserializer
+mp.messaging.incoming.travellers.value.deserializer=org.apache.kafka.common.serialization.StringDeserializer
 ----
 
 where `.travellers.` is the name that matches the message name of the message start event.
 
-Deserialization depends on type of data to be received, it can be based on JSONB that comes with Quarkus Kafka-client extension or it can be any of the standard types Apache Kafka comes with.
 
 Add following for message end event 
 
@@ -60,12 +55,10 @@ Add following for message end event
 ----
 mp.messaging.outgoing.processedtravellers.connector=smallrye-kafka
 mp.messaging.outgoing.processedtravellers.topic=processedtravellers
-mp.messaging.outgoing.processedtravellers.value.serializer=org.acme.travel.json.TravellerJsonbSerializer
+mp.messaging.outgoing.processedtravellers.value.serializer=org.apache.kafka.common.serialization.StringSerializer
 ----
 
 where `.processedtravellers.` is the name that matches the message name of the message end event.
-
-Serialization depends on type of data to be received, it can be based on JSONB that comes with Quarkus Kafka-client extension or it can be any of the standard types Apache Kafka comes with.
 
 Under heavy load for producer there might be error thrown in case the back pressure is overloaded. Use following property to disable waiting for completion which should make the overall throughput higher
 
@@ -125,16 +118,16 @@ public class KafkaConsumerConfig {
     @Value(value = "${kafka.bootstrapAddress}")
     private String bootstrapAddress;
 
-    public ConsumerFactory<String, Traveller> consumerFactory() {
+    public ConsumerFactory<String, String> consumerFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "travellers-group");
-        return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), new JsonDeserializer<>(Traveller.class));
+        return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), new StringDeserializer());
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, Traveller> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, Traveller> factory = new ConcurrentKafkaListenerContainerFactory<>();
+    public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }
@@ -157,17 +150,17 @@ public class KafkaProducerConfig {
 
     
     @Bean
-    public ProducerFactory<String, Traveller> producerFactory() {
+    public ProducerFactory<String, String> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(JsonSerializer.ADD_TYPE_INFO_HEADERS, false);
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);        
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         return new DefaultKafkaProducerFactory<>(configProps);
     }
     
     @Bean
-    public KafkaTemplate<String, Traveller> kafkaTemplate() {
+    public KafkaTemplate<String, String> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
     
