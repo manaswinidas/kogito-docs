@@ -22,4 +22,8 @@ These usually are placed in `application.properties` file but Can also be overri
 |`kogito.events.usertasks.enabled`
 |True or False property instructing if runtime events should be published for user task instance, defaults to true
 |0.4.0
+
+|`kogito.messaging.as-cloudevents`
+|True or False property instructing if messages (send or received via message events) should be published fin cloud event format or not, defaults to true
+|0.5.0
 |===
