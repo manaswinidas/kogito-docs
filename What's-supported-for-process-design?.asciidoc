@@ -71,6 +71,10 @@ requirements not all BPMN2 constructs are supported at the moment. They are bein
 |Call activity (Reusable subprocess)
 |Call activity task allows to create sub process instance from within process
 |0.1.0
+
+|Embedded subprocess
+|Embedded subprocess allows to wrap number of activities to be considered as separate subprocess but stays in the context of the same process instance as opposed to Call activity.
+|0.5.0
 |===
 
 == Gateways
@@ -92,9 +96,13 @@ NOTE: Syntax for conditions is limited to java expressions
 |Parallel (AND)
 |Parallel gateway allows to all defined paths without any condition check
 |0.1.0
+
+|Event (AND)
+|Event gateway allows to wait for one of many events to arrive (timer, signal, message) and select only one path for the event that arrived first. All other are canceled.
+|0.1.0
 |===
 
-== Intermediate events
+== Intermediate catch events
 
 [cols="20%,60%,20%"]
 |===
@@ -103,6 +111,14 @@ NOTE: Syntax for conditions is limited to java expressions
 |Signal
 |Signal event allows to pause process instance and wait for given signal to arrive with optional data
 |0.2.0
+
+|Message
+|Message event allows to pause process instance and wait for given message to arrive with data
+|0.5.0
+
+|Timer
+|Timer event allows to pause process instance and wait specified amount of time before continuing. NOTE: at the moment it issues in memory timers that won't survive application restarts
+|0.5.0
 |===
 
 == Boundary events
@@ -114,6 +130,25 @@ NOTE: Syntax for conditions is limited to java expressions
 |Signal
 |Signal event allows to attach extra path to activity and wait for given signal to arrive with optional data
 |0.2.0
+
+|Message
+|Message event allows to attach extra path to activity and wait for given message to arrive with data
+|0.5.0
+
+|Timer
+|Timer event allows to attach extra path to activity and wait specified amount of time before continuing. NOTE: at the moment it issues in memory timers that won't survive application restarts
+|0.5.0
+|===
+
+== Intermediate throw events
+
+[cols="20%,60%,20%"]
+|===
+|Type |Description |Since version 
+
+|Message
+|Message event allows to send a message with data mapped from process instance variable
+|0.5.0
 |===
 
 == Multi instance characteristic 
