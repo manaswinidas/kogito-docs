@@ -1,3 +1,4 @@
+
 User tasks play an important role in business processes and are the core construct in Kogito. They are implemented as work item and their execution is defined by work item handler.
 
 # Life cycle
@@ -122,7 +123,7 @@ List<WorkItem> workItems = processInstance.workItems(policy);
 // work on a task
 final String wiId = workItems.get(0).getId();
 processInstance.transitionWorkItem(wiId, 
-                                   new HumanTaskTransition(Start.ID, null, policy));
+                                   new HumanTaskTransition(Claim.ID, null, policy));
 
 processInstance.transitionWorkItem(wiId, 
                                    new HumanTaskTransition(Complete.ID, Collections.singletonMap("approved", false), policy));                
@@ -197,3 +198,5 @@ A complete Quickstart showing custom life cycle in action can be found
 
 * https://github.com/mswiderski/kogito-quickstarts/kogito-usertasks-custom-lifecycle-quarkus[for Quarkus]
 * https://github.com/mswiderski/kogito-quickstarts/kogito-usertasks-custom-lifecycle-springboot[for SpringBoot]
+
+NOTE: Human Tasks *On Entry* and *On Exit* actions are not yet supported.
