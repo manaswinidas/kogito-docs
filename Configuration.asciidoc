@@ -7,6 +7,7 @@ There are several configuration that can be needed when implementing Kogito enab
 * enabling metrics
 * enabling persistence
 * enabling events produced by runtimes
+* use Kogito Job Service as timer service
 
 These various items might require dependencies setup, code and configuration in the application.properties file.
 
@@ -427,3 +428,63 @@ There are several application properties that allow to control the event publish
 
 * `kogito.events.processinstances.enabled` - allows to enable/disable publishing process instance events, defaults to true
 * `kogito.events.usertasks.enabled` - allows to enable/disable publishing user task instance events, defaults to true
+
+
+## Use Kogito Job Service as timer service
+
+By default Kogito services use in memory timer service to to handle time based events defined in the process. This does not cover long time intervals and is only suitable for short delays defined in the process. To allow for more advanced use cases where the time intervals can be of days or weeks or when there is extra handling required such as retries, Kogito Job Service can be used.
+
+See details about Kogito Job Service here.
+
+To enable Kogito Job Service to be used as timer service there are two steps required
+
+1. Add dependency that is specific to the runtime your service is using (Quarkus or Spring Boot)
+2. Configure locations of the Kogito Job Service and Callback
+
+### Kogito Job service for Quarkus
+
+Add following dependency to your pom.xml
+
+[source, xml]
+----
+<dependency>
+  <groupId>org.kie.kogito</groupId>
+  <artifactId>jobs-management-quarkus-addon</artifactId>
+</dependency>
+----
+
+### Kogito Job service for Spring Boot
+
+Add following dependency to your pom.xml
+
+[source, xml]
+----
+<dependency>
+  <groupId>org.kie.kogito</groupId>
+  <artifactId>jobs-management-springboot-addon</artifactId>
+</dependency>
+----
+
+### Configure service
+
+Add following properties to `application.properties` file to inform the Kogito Job Service add-on about locations of both Job Service itself and callback to be used when timer expires.
+
+[source, plain]
+----
+kogito.jobs-service.url=http://localhost:8085
+kogito.service.url=http://localhost:8080
+----
+
+NOTE: Before this can be used, make sure that Kogito Job Service is started and the configuration given above is valid for its location.
+
+
+### Configuring rest clients used by job service add-on
+
+In case default settings of the rest clients used by the job service add-on are not sufficient, custom configured clients can be provided by the service implementors.
+
+The top of rest client will differ depending on the runtime used
+
+* quarkus - uses Vert.x web client `io.vertx.ext.web.client.WebClient`
+* spring boot - uses RestTemplate `org.springframework.web.client.RestTemplate`
+
+in both cases just product an instance of the above client to allow fine grained setup of the client.
