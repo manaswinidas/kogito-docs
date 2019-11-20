@@ -2,3 +2,48 @@
 
 # Kogito Job Service add-ons
 
+Addons are specific classes that provides integration with Kogito Job Service to the runtime services. This allows to use Job Service as a timer service for process instances. Whenever there is a need to schedule timer as part of process instance it will be scheduled in the Job Service and the job service will callback the service upon timer expiration.
+
+The general implementation of the add-on is as follows:
+
+* an implementation of `org.kie.kogito.jobs.JobsService` interface that is used by the service to schedule jobs
+* REST endpoint registered on `/management/jobs` path
+
+## Configuration properties
+
+Regardless of the runtime being used following are two configuration properties that are expected (and by that are mandatory)
+
+[cols="40%,400%,20%"]
+|===
+|Name |Description |Example 
+
+|`kogito.service.url`
+|A URL that identifies where the service is deployed to. Used by runtime events to set the source of the event.
+|http://localhost:8080
+
+|`kogito.jobs-service.url`
+|An URL that posts to a running Kogito Job Service, it is expected to be in form `scheme://host:port`
+|http://localhost:8085
+|===
+
+## JobService implementation
+
+A dedicated `org.kie.kogito.jobs.JobsService` implementation is provided based on the runtime being used (either Quarkus or SpringBoot) as it relies on the technology used in these runtime to optimise dependencies and integration. 
+
+### Quarkus 
+
+For Quarkus based runtimes, there is `org.kie.kogito.jobs.management.quarkus.VertxJobsService` implementation that utilises Vert.x `WebClient` to interact with Job Service over HTTP.
+
+It configures web client by default based on properties found in application.properties. Though in case this is not enough it supports to provide custom instance of `io.vertx.ext.web.client.WebClient` type that will be used instead to communicate with Job Service.
+
+### Spring Boot
+
+For Spring Boot based runtimes, there is `org.kie.kogito.jobs.management.springboot.SpringRestJobsService` implementation that utilises Spring `RestTemplate` to interact with Job Service over HTTP. 
+
+It configures rest template by default based on properties found in application.properties. Though in case this is not enough it supports to provide custom instance of `org.springframework.web.client.RestTemplate` type that will be used instead to communicate with Job Service.
+
+## REST endpoint for callbacks
+
+
+
+
