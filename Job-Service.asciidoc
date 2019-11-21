@@ -2,6 +2,90 @@
 
 TODO
 
+## Overview
+
+Kogito Job Service is a dedicated lightweight service responsible for scheduling jobs that aim to be fired at a given time. The service does not execute the job itself, it triggers a callback that could be an HTTP request on a given endpoint specified on the job request, or any other callback that could be supported by the service.
+
+## Architecture
+
+image::images/Job Service Architecture.png[Job Service - Architecture]
+
+
+Basically, the Job Service receives requests of job scheduling and it sends a request at the time specified on the job request, as shown above.
+
+The main goal of the service is to work with only active jobs, in this way it only keeps track of the jobs that are scheduled and supposed to be executed, the jobs that achieve a final state are removed from the job service. It is important to notice that all job information and transitioning states are pushed to Kogito Data Index where they can be indexed and made available for queries.
+
+## Technical Overview
+
+The Job Service implementation is based on non-blocking APIs and reactive messaging on the top of Quarkus, which provides the most effective throughput and resource utilization. The current scheduling engine is implemented on the top of Vert.x and the external requests are built using a non-blocking HTTP client based on Vert.x.
+
+
+### Stack
+
+* https://quarkus.io/[*Quarkus]*
+* https://vertx.io/[*Vert.x]*
+* https://smallrye.io/smallrye-reactive-messaging/[*Reactive Messaging]*
+* https://infinispan.org/[*Infinispan]*
+
+### State control
+
+Job service uses an internal state control to manage the job scheduling lifecycle that is detailed on the following diagram:
+
+image::images/Job Service - States.png[Job Service - States]
+
+
+### Job types
+
+Current these are the supported Job types that can be executed by the Job Service.
+
+#### Date scheduled
+
+#### Periodic scheduled
+
+### Supported callbacks
+
+#### HTTP
+
+HTTP POST requests that are sent do a given endpoint specified on the job scheduling request.
+
+### Persistence
+
+#### In-Memory
+
+#### Infinispan
+
+* Configuration
+
+### API documentation
+
+The current API documentation is based on Swagger, and the service has an embedded UI available at
+http://localhost:8080/swagger-ui/[*http://localhost:8080/swagger-ui]*
+
+## Getting started
+
+
+* *Build*
+
+* *Run*
+
+----
+mvn clean compile quarkus:dev
+----
+
+* *Running with Infinispan persistence*
+
+* *Schedule a Job*
+
+* *Reschedule a Job*
+
+* *Cancel a scheduled Job*
+
+* *Retrieve a scheduled Job*
+
+
+
+#=============================
+
 # Kogito Job Service add-ons
 
 Addons are specific classes that provides integration with Kogito Job Service to the runtime services. This allows to use Job Service as a timer service for process instances. Whenever there is a need to schedule timer as part of process instance it will be scheduled in the Job Service and the job service will callback the service upon timer expiration.
