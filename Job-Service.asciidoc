@@ -1,7 +1,5 @@
 # Kogito Job Service
 
-TODO
-
 ## Overview
 
 Kogito Job Service is a dedicated lightweight service responsible for scheduling jobs that aim to be fired at a given time. The service does not execute the job itself, it triggers a callback that could be an HTTP request on a given endpoint specified on the job request, or any other callback that could be supported by the service.
@@ -82,9 +80,6 @@ mvn clean compile quarkus:dev
 
 * *Retrieve a scheduled Job*
 
-
-
-#=============================
 
 # Kogito Job Service add-ons
 
