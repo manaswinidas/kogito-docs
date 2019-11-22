@@ -20,10 +20,10 @@ The Job Service implementation is based on non-blocking APIs and reactive messag
 
 ### Stack
 
-* https://quarkus.io/[*Quarkus]*
-* https://vertx.io/[*Vert.x]*
-* https://smallrye.io/smallrye-reactive-messaging/[*Reactive Messaging]*
-* https://infinispan.org/[*Infinispan]*
+* https://quarkus.io/[Quarkus]
+* https://vertx.io/[Vert.x]
+* https://smallrye.io/smallrye-reactive-messaging/[Reactive Messaging]
+* https://infinispan.org/[Infinispan]
 
 ### State control
 
@@ -32,45 +32,94 @@ Job service uses an internal state control to manage the job scheduling lifecycl
 image::images/Job Service - States.png[Job Service - States]
 
 
+{sp} +
+
 ### Job types
 
 Current these are the supported Job types that can be executed by the Job Service.
 
-#### Date scheduled
+[#time_scheduled]
+#### Time scheduled
+
+Jobs that are scheduled with a point in time and are executed only once when that point in time is
+reached. The time should be specified on the job scheduling request, and it should be in the future otherwise
+the job is not able to be scheduled.
 
 #### Periodic scheduled
 
+The job is executed at a given point in time similar to the <<time_scheduled>> and if the execution is success, it
+triggers the job execution after a given interval and repeats this execution periodically until a limit of execution
+times is reached. The limit and interval should be specified on the Job scheduling request.
+
+
+{sp} +
+
 ### Supported callbacks
+
+These are the supported callbacks that are fired when a job is executed. The callback information should be specified
+on the job scheduling request.
 
 #### HTTP
 
-HTTP POST requests that are sent do a given endpoint specified on the job scheduling request.
+* POST requests that are sent do a given endpoint specified on the job scheduling request.
+
+
+{sp} +
 
 ### Persistence
 
 #### In-Memory
 
+Uses an in-memory storage during the Job Service runtime, if the service is restarted all the information are lost.
+This is the default configuration of Job Service, so if no other configuration is set it will use this persistence
+mechanism.
+
 #### Infinispan
 
-* Configuration
+Uses Infinispan as the storage, in this way Job Service can be restarted and it will continue to process any previous
+schedule job, since all the information is persisted on Infinispan. To enable this persistence it is necessary to set
+some configuration parameters, detailed on <<infinispan_configuration>>
+
+[#infinispan_configuration]
+##### Infinispan Configuration
+To enable Infinispan persistence it is quite simple, you should set the parameter `kogito
+.job-service.persistence=infinispan` that could be set, either using `-D` option during the startup or setting it on the `application.properties` file present on the source code.
+
+All Infinispan configuration like the servers address list, authentication, etc, follows Quarkus configuration
+mechanism and can be found https://quarkus.io/guides/infinispan-client[here].
+
+{sp} +
 
 ### API documentation
 
 The current API documentation is based on Swagger, and the service has an embedded UI available at
-http://localhost:8080/swagger-ui/[*http://localhost:8080/swagger-ui]*
+http://localhost:8080/swagger-ui/[http://localhost:8080/swagger-ui]
 
 ## Getting started
 
 
-* *Build*
-
-* *Run*
-
+* *Running*
+** Using dev mode :
 ----
 mvn clean compile quarkus:dev
 ----
 
+ ** Comand line based on the JAR file
+----
+java -jar jobs-service-8.0.0-SNAPSHOT-runner.jar
+----
+
 * *Running with Infinispan persistence*
+** Using dev mode :
+----
+mvn clean compile quarkus:dev -Dkogito.job-service.persistence=infinispan
+----
+** Comand line based on the JAR file
+----
+java -jar jobs-service-8.0.0-SNAPSHOT-runner.jar -Dkogito.job-service.persistence=infinispan
+----
+
+### Usage
 
 * *Schedule a Job*
 
