@@ -2,7 +2,8 @@
 
 ## Overview
 
-Kogito Job Service is a dedicated lightweight service responsible for scheduling jobs that aim to be fired at a given time. The service does not execute the job itself, it triggers a callback that could be an HTTP request on a given endpoint specified on the job request, or any other callback that could be supported by the service.
+Kogito Job Service is a dedicated lightweight service responsible for scheduling jobs that aim to be fired at a given time.
+The service does not execute the job itself, it triggers a callback that could be an HTTP request on a given endpoint specified on the job request, or any other callback that could be supported by the service.
 
 ## Architecture
 
@@ -11,12 +12,13 @@ image::images/Job Service Architecture.png[Job Service - Architecture]
 
 Basically, the Job Service receives requests of job scheduling and it sends a request at the time specified on the job request, as shown above.
 
-The main goal of the service is to work with only active jobs, in this way it only keeps track of the jobs that are scheduled and supposed to be executed, the jobs that achieve a final state are removed from the job service. It is important to notice that all job information and transitioning states are pushed to Kogito Data Index where they can be indexed and made available for queries.
+The main goal of the service is to work with only active jobs, in this way it only keeps track of the jobs that are scheduled and supposed to be executed, the jobs that achieve a final state are removed from the job service.
+It is important to notice that all job information and transitioning states are pushed to Kogito Data Index where they can be indexed and made available for queries.
 
 ## Technical Overview
 
-The Job Service implementation is based on non-blocking APIs and reactive messaging on the top of Quarkus, which provides the most effective throughput and resource utilization. The current scheduling engine is implemented on the top of Vert.x and the external requests are built using a non-blocking HTTP client based on Vert.x.
-
+The Job Service implementation is based on non-blocking APIs and reactive messaging on the top of Quarkus, which provides the most effective throughput and resource utilization.
+The current scheduling engine is implemented on the top of Vert.x and the external requests are built using a non-blocking HTTP client based on Vert.x.
 
 ### Stack
 
@@ -34,6 +36,7 @@ image::images/Job Service - States.png[Job Service - States]
 
 {sp} +
 
+
 ### Job types
 
 Current these are the supported Job types that can be executed by the Job Service.
@@ -41,23 +44,22 @@ Current these are the supported Job types that can be executed by the Job Servic
 [#time_scheduled]
 #### Time scheduled
 
-Jobs that are scheduled with a point in time and are executed only once when that point in time is
-reached. The time should be specified on the job scheduling request, and it should be in the future otherwise
-the job is not able to be scheduled.
+Jobs that are scheduled with a point in time and are executed only once when that point in time is reached.
+The time should be specified on the job scheduling request, and it should be in the future otherwise the job is not able to be scheduled.
 
 #### Periodic scheduled
 
-The job is executed at a given point in time similar to the <<time_scheduled>> and if the execution is success, it
-triggers the job execution after a given interval and repeats this execution periodically until a limit of execution
-times is reached. The limit and interval should be specified on the Job scheduling request.
+The job is executed at a given point in time similar to the <<time_scheduled>> and if the execution is success, it triggers the job execution after a given interval and repeats this execution periodically until a limit of execution times is reached.
+The limit and interval should be specified on the Job scheduling request.
 
 
 {sp} +
 
+
 ### Supported callbacks
 
-These are the supported callbacks that are fired when a job is executed. The callback information should be specified
-on the job scheduling request.
+These are the supported callbacks that are fired when a job is executed.
+The callback information should be specified on the job scheduling request.
 
 #### HTTP
 
@@ -66,73 +68,184 @@ on the job scheduling request.
 
 {sp} +
 
+
 ### Persistence
 
 #### In-Memory
 
 Uses an in-memory storage during the Job Service runtime, if the service is restarted all the information are lost.
-This is the default configuration of Job Service, so if no other configuration is set it will use this persistence
-mechanism.
+This is the default configuration of Job Service, so if no other configuration is set it will use this persistence mechanism.
 
 #### Infinispan
 
-Uses Infinispan as the storage, in this way Job Service can be restarted and it will continue to process any previous
-schedule job, since all the information is persisted on Infinispan. To enable this persistence it is necessary to set
-some configuration parameters, detailed on <<infinispan_configuration>>
+Uses Infinispan as the storage, in this way Job Service can be restarted and it will continue to process any previous schedule job, since all the information is persisted on Infinispan.
+To enable this persistence it is necessary to set some configuration parameters, detailed on <<infinispan_configuration>>
 
 [#infinispan_configuration]
 ##### Infinispan Configuration
+
 To enable Infinispan persistence it is quite simple, you should set the parameter `kogito
 .job-service.persistence=infinispan` that could be set, either using `-D` option during the startup or setting it on the `application.properties` file present on the source code.
 
-All Infinispan configuration like the servers address list, authentication, etc, follows Quarkus configuration
-mechanism and can be found https://quarkus.io/guides/infinispan-client[here].
+All Infinispan configuration like the servers address list, authentication, etc, follows Quarkus configuration mechanism and can be found https://quarkus.io/guides/infinispan-client[here].
 
 {sp} +
+
 
 ### API documentation
 
 The current API documentation is based on Swagger, and the service has an embedded UI available at
 http://localhost:8080/swagger-ui/[http://localhost:8080/swagger-ui]
 
-## Getting started
+## Configuration properties
 
+Regardless of the runtime being used following are the configuration properties that can be set, otherwise the default values are going to be used.
+
+[cols="30%,40%,15%,15%"]
+|===
+
+|Name |Description |Value |Default
+
+|`kogito.job-service.persistence`
+|Identifies whe persistence mechanism used by the service.
+|in-memory, infinispan
+|in-memory
+
+|`kogito.job-service.backoffRetryMillis`
+|Retry backoff time in milliseconds between the job execution attempts, in case of execution failure.
+|long
+|1000
+
+|`kogito.job-service.maxIntervalLimitToRetryMillis`
+|Maximum interval in milliseconds when retrying to execute jobs, in case of failures.
+|long
+|60000
+
+|===
+
+## Getting started
 
 * *Running*
 ** Using dev mode :
+
 ----
 mvn clean compile quarkus:dev
 ----
 
- ** Comand line based on the JAR file
+** Comand line based on the JAR file
+
 ----
 java -jar jobs-service-8.0.0-SNAPSHOT-runner.jar
 ----
 
 * *Running with Infinispan persistence*
 ** Using dev mode :
+
 ----
 mvn clean compile quarkus:dev -Dkogito.job-service.persistence=infinispan
 ----
+
 ** Comand line based on the JAR file
+
 ----
 java -jar jobs-service-8.0.0-SNAPSHOT-runner.jar -Dkogito.job-service.persistence=infinispan
 ----
 
+{sp} +
+
 ### Usage
 
-* *Schedule a Job*
+The basic actions on Job Service are made through REST as follow:
 
-* *Reschedule a Job*
+#### Schedule a Job
 
-* *Cancel a scheduled Job*
+POST
 
-* *Retrieve a scheduled Job*
+http://localhost:8080/job
 
+```
+{
+    "id": "1",
+    "priority": "1",
+    "expirationTime": "2019-11-29T18:16:00Z",
+    "callbackEndpoint": "http://localhost:8080/callback"
+}
+```
+
+Example:
+
+ curl -X POST \
+  http://localhost:8080/job/ \
+  -H 'Content-Type: application/json' \
+  -d '{
+	"id": "1",
+	"priority": "1",
+	"expirationTime": "2019-11-29T18:16:00Z",
+	"callbackEndpoint": "http://localhost:8080/callback"
+}'
+
+{sp} +
+
+#### Reschedule a Job
+
+POST
+
+http://localhost:8080/job
+
+```
+{
+	"id": "1",
+	"priority": "1",
+	"expirationTime": "2019-11-29T18:19:00Z",
+	"callbackEndpoint": "http://localhost:8080/callback"
+}
+```
+
+Example:
+
+ curl -X POST \
+  http://localhost:8080/job/ \
+  -H 'Content-Type: application/json' \
+  -d '{
+	"id": "1",
+	"priority": "1",
+	"expirationTime": "2019-11-29T18:19:00Z",
+	"callbackEndpoint": "http://localhost:8080/callback"
+}'
+
+{sp} +
+
+#### Cancel a scheduled Job
+
+DELETE
+
+http://localhost:8080/job/1
+
+Example:
+
+ curl -X DELETE http://localhost:8080/job/1
+
+{sp} +
+
+#### Retrieve a scheduled Job
+
+GET
+
+http://localhost:8080/job/scheduled/1
+
+Example:
+
+ curl -X GET http://localhost:8080/job/scheduled/1
+
+{sp} +
+
+---
 
 # Kogito Job Service add-ons
 
-Addons are specific classes that provides integration with Kogito Job Service to the runtime services. This allows to use Job Service as a timer service for process instances. Whenever there is a need to schedule timer as part of process instance it will be scheduled in the Job Service and the job service will callback the service upon timer expiration.
+Addons are specific classes that provides integration with Kogito Job Service to the runtime services.
+This allows to use Job Service as a timer service for process instances.
+Whenever there is a need to schedule timer as part of process instance it will be scheduled in the Job Service and the job service will callback the service upon timer expiration.
 
 The general implementation of the add-on is as follows:
 
@@ -145,7 +258,7 @@ Regardless of the runtime being used following are two configuration properties 
 
 [cols="40%,400%,20%"]
 |===
-|Name |Description |Example 
+|Name |Description |Example
 
 |`kogito.service.url`
 |A URL that identifies where the service is deployed to. Used by runtime events to set the source of the event.
@@ -158,19 +271,21 @@ Regardless of the runtime being used following are two configuration properties 
 
 ## JobService implementation
 
-A dedicated `org.kie.kogito.jobs.JobsService` implementation is provided based on the runtime being used (either Quarkus or SpringBoot) as it relies on the technology used in these runtime to optimise dependencies and integration. 
+A dedicated `org.kie.kogito.jobs.JobsService` implementation is provided based on the runtime being used (either Quarkus or SpringBoot) as it relies on the technology used in these runtime to optimise dependencies and integration.
 
 ### Quarkus 
 
 For Quarkus based runtimes, there is `org.kie.kogito.jobs.management.quarkus.VertxJobsService` implementation that utilises Vert.x `WebClient` to interact with Job Service over HTTP.
 
-It configures web client by default based on properties found in application.properties. Though in case this is not enough it supports to provide custom instance of `io.vertx.ext.web.client.WebClient` type that will be used instead to communicate with Job Service.
+It configures web client by default based on properties found in application.properties.
+Though in case this is not enough it supports to provide custom instance of `io.vertx.ext.web.client.WebClient` type that will be used instead to communicate with Job Service.
 
 ### Spring Boot
 
-For Spring Boot based runtimes, there is `org.kie.kogito.jobs.management.springboot.SpringRestJobsService` implementation that utilises Spring `RestTemplate` to interact with Job Service over HTTP. 
+For Spring Boot based runtimes, there is `org.kie.kogito.jobs.management.springboot.SpringRestJobsService` implementation that utilises Spring `RestTemplate` to interact with Job Service over HTTP.
 
-It configures rest template by default based on properties found in application.properties. Though in case this is not enough it supports to provide custom instance of `org.springframework.web.client.RestTemplate` type that will be used instead to communicate with Job Service.
+It configures rest template by default based on properties found in application.properties.
+Though in case this is not enough it supports to provide custom instance of `org.springframework.web.client.RestTemplate` type that will be used instead to communicate with Job Service.
 
 ## REST endpoint for callbacks
 
@@ -182,6 +297,8 @@ The callback URL is given to the Job Service upon scheduling and as such does pr
 * process instance id
 * timer instance id
 
-NOTE: Timer instance id is build out of two parts - actual job id (in UUID format) and a timer id (a timer definition id generated by the process engine). An example of a timer instance id is `62cad2e4-d343-46ac-a89c-3e313a30c1ad_1` where `62cad2e4-d343-46ac-a89c-3e313a30c1ad` is the UUID of the job and `1` is the timer definition id. Both values are separated with `_`
+NOTE: Timer instance id is build out of two parts - actual job id (in UUID format) and a timer id (a timer definition id generated by the process engine).
+An example of a timer instance id is `62cad2e4-d343-46ac-a89c-3e313a30c1ad_1` where `62cad2e4-d343-46ac-a89c-3e313a30c1ad` is the UUID of the job and `1` is the timer definition id.
+Both values are separated with `_`
 
 
