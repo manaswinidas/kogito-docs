@@ -1,3 +1,6 @@
+:jobs-path: /jobs
+:url-job-service: http://localhost:8080
+
 # Kogito Job Service
 
 ## Overview
@@ -95,7 +98,7 @@ All Infinispan configuration like the servers address list, authentication, etc,
 ### API documentation
 
 The current API documentation is based on Swagger, and the service has an embedded UI available at
-http://localhost:8080/swagger-ui/[http://localhost:8080/swagger-ui]
+{url-job-service}/swagger-ui/[{url-job-service}/swagger-ui]
 
 ## Configuration properties
 
@@ -148,7 +151,7 @@ mvn clean compile quarkus:dev -Dkogito.job-service.persistence=infinispan
 ** Comand line based on the JAR file
 
 ----
-java -jar jobs-service-8.0.0-SNAPSHOT-runner.jar -Dkogito.job-service.persistence=infinispan
+java -Dkogito.job-service.persistence=infinispan -jar jobs-service-8.0.0-SNAPSHOT-runner.jar
 ----
 
 {sp} +
@@ -161,7 +164,7 @@ The basic actions on Job Service are made through REST as follow:
 
 POST
 
-http://localhost:8080/job
+{url-job-service}{jobs-path}
 
 ```
 {
@@ -175,7 +178,7 @@ http://localhost:8080/job
 Example:
 
  curl -X POST \
-  http://localhost:8080/job/ \
+  {url-job-service}{jobs-path}/ \
   -H 'Content-Type: application/json' \
   -d '{
 	"id": "1",
@@ -190,7 +193,7 @@ Example:
 
 POST
 
-http://localhost:8080/job
+{url-job-service}{jobs-path}
 
 ```
 {
@@ -204,7 +207,7 @@ http://localhost:8080/job
 Example:
 
  curl -X POST \
-  http://localhost:8080/job/ \
+  {url-job-service}{jobs-path}/ \
   -H 'Content-Type: application/json' \
   -d '{
 	"id": "1",
@@ -219,11 +222,11 @@ Example:
 
 DELETE
 
-http://localhost:8080/job/1
+{url-job-service}{jobs-path}/1
 
 Example:
 
- curl -X DELETE http://localhost:8080/job/1
+ curl -X DELETE {url-job-service}{jobs-path}/1
 
 {sp} +
 
@@ -231,11 +234,11 @@ Example:
 
 GET
 
-http://localhost:8080/job/scheduled/1
+{url-job-service}{jobs-path}/1
 
 Example:
 
- curl -X GET http://localhost:8080/job/scheduled/1
+ curl -X GET {url-job-service}{jobs-path}/1
 
 {sp} +
 
