@@ -176,7 +176,7 @@ POST
 ```
 
 Example:
-
+[subs="attributes"]
  curl -X POST \
   {url-job-service}{jobs-path}/ \
   -H 'Content-Type: application/json' \
@@ -205,7 +205,7 @@ POST
 ```
 
 Example:
-
+[subs="attributes"]
  curl -X POST \
   {url-job-service}{jobs-path}/ \
   -H 'Content-Type: application/json' \
@@ -225,7 +225,7 @@ DELETE
 {url-job-service}{jobs-path}/1
 
 Example:
-
+[subs="attributes"]
  curl -X DELETE {url-job-service}{jobs-path}/1
 
 {sp} +
@@ -237,7 +237,7 @@ GET
 {url-job-service}{jobs-path}/1
 
 Example:
-
+[subs="attributes"]
  curl -X GET {url-job-service}{jobs-path}/1
 
 {sp} +
