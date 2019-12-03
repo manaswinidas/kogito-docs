@@ -109,17 +109,17 @@ Regardless of the runtime being used following are the configuration properties 
 
 |Name |Description |Value |Default
 
-|`kogito.job-service.persistence`
+|`kogito.jobs-service.persistence`
 |Identifies whe persistence mechanism used by the service.
 |in-memory, infinispan
 |in-memory
 
-|`kogito.job-service.backoffRetryMillis`
+|`kogito.jobs-service.backoffRetryMillis`
 |Retry backoff time in milliseconds between the job execution attempts, in case of execution failure.
 |long
 |1000
 
-|`kogito.job-service.maxIntervalLimitToRetryMillis`
+|`kogito.jobs-service.maxIntervalLimitToRetryMillis`
 |Maximum interval in milliseconds when retrying to execute jobs, in case of failures.
 |long
 |60000
@@ -145,13 +145,13 @@ java -jar jobs-service-8.0.0-SNAPSHOT-runner.jar
 ** Using dev mode :
 
 ----
-mvn clean compile quarkus:dev -Dkogito.job-service.persistence=infinispan
+mvn clean compile quarkus:dev -Dkogito.jobs-service.persistence=infinispan
 ----
 
 ** Comand line based on the JAR file
 
 ----
-java -Dkogito.job-service.persistence=infinispan -jar jobs-service-8.0.0-SNAPSHOT-runner.jar
+java -Dkogito.jobs-service.persistence=infinispan -jar jobs-service-8.0.0-SNAPSHOT-runner.jar
 ----
 
 {sp} +
