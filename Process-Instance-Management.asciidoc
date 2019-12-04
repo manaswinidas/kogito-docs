@@ -1,0 +1,106 @@
+# Process Instance Management add-on 
+
+Add-on to provide management on top of active process instances. Main areas covered by management add-on are
+
+* Abort of active process instance
+* Node instance operations - cancel or retrigger
+* Node operations - trigger new instance of a node
+* Error handling - skip or retrigger failed node instance
+
+In addition to operations exposed by the add-on it also comes with REST exception mappers to provide more meaningful error message for typical exception types
+
+* ProcessInstanceNotFound
+* NodeInstanceNotFound
+* NodeNotFound
+* ProcessInstanceExecutionError
+* NotAuthorized
+* InvalidTransition (for work items)
+* InvalidLifeCyclePhase (for work items)
+
+These exception mappers will produce a valid HTTP error code with JSON payload providing more information about the context which caused the exception to be thrown. For example here is an example for ProcessInstanceNotFoundException thrown at runtime
+
+`HTTP code` : 404
+
+[source,json]
+----
+{
+  "processInstanceId" : "c6862071-0f2e-4f21-9bc8-586245a76c3aa",
+  "message" : "Process instance with id c6862071-0f2e-4f21-9bc8-586245a76c3aa not found"
+}
+----
+
+Each operation is exposed as REST endpoint and each of them requires to provide at least
+
+* process id - the actual process definition id that is used by the engine
+* process instance id - unique identifier assigned to each process instance
+
+## Abort process instance
+
+Aborts active process instance via `HTTP DELETE` operation
+
+`/management/processes/{processid}/instances/{processInstanceId}`
+
+Replace `processId` and `processInstanceId` with actual values matching your environment.
+
+
+## Cancel node instance within process instance
+
+Cancels active node instance via `HTTP DELETE` operation
+
+`/management/processes/{processid}/instances/{processInstanceId}/nodeInstances/{nodeInstanceId}`
+
+Replace `processId`, `processInstanceId` and `nodeInstanceId` with actual values matching your environment.
+
+## Retrigger node instance within process instance
+
+Retriggers active node instance (old one is canceled) via `HTTP POST` operation
+
+`/management/processes/{processid}/instances/{processInstanceId}/nodeInstances/{nodeInstanceId}`
+
+Replace `processId`, `processInstanceId` and `nodeInstanceId` with actual values matching your environment.
+
+## Trigger new instance of a node within process instance
+
+Creates new instance of a node via `HTTP POST` operation
+
+`/management/processes/{processid}/instances/{processInstanceId}/nodes/{nodeId}`
+
+Replace `processId`, `processInstanceId` and `nodeId` with actual values matching your environment.
+
+NOTE: `nodeId` is the node definition id.
+
+## Error handling on process instance - retrigger failed node
+
+Retriggers failed node instance in a process instance via `HTTP POST` operation
+
+NOTE: only applicable when process instance is in `ERROR` state
+
+`/management/processes/{processid}/instances/{processInstanceId}/retrigger`
+
+Replace `processId` and `processInstanceId` with actual values matching your environment.
+
+## Error handling on process instance - skip failed node
+
+Skips failed node instance in a process instance via `HTTP POST` operation
+
+NOTE: only applicable when process instance is in `ERROR` state
+
+`/management/processes/{processid}/instances/{processInstanceId}/skip`
+
+Replace `processId` and `processInstanceId` with actual values matching your environment.
+
+## Get error details for process instance
+
+Aborts active process instance via `HTTP GET` operation
+
+`/management/processes/{processid}/instances/{processInstanceId}/error`
+
+Replace `processId` and `processInstanceId` with actual values matching your environment.
+
+## Get active node instances for process instance
+
+Aborts active process instance via `HTTP GET` operation
+
+`/management/processes/{processid}/instances/{processInstanceId}/nodeInstances`
+
+Replace `processId` and `processInstanceId` with actual values matching your environment.
