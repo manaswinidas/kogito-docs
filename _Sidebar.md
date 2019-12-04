@@ -17,6 +17,7 @@
 <li><a href="https://github.com/kiegroup/kogito-runtimes/wiki/User-tasks">User tasks</a></li>
         <li><a href="https://github.com/kiegroup/kogito-runtimes/wiki/Persistence">Persistence</a>  </li>
 <li><a href="https://github.com/kiegroup/kogito-runtimes/wiki/Messaging">Messaging</a>  </li>
+<li><a href="https://github.com/kiegroup/kogito-runtimes/wiki/Process-Instance-Management">Management</a>  </li>
       </ul>
      </li>
      <li><a href="https://github.com/kiegroup/kogito-runtimes/wiki/Data-Index-Service">Data Index Service</a></li>
