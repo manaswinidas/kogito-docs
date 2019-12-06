@@ -1,11 +1,11 @@
 :jobs-path: /jobs
 :url-job-service: http://localhost:8080
 
-# Kogito Job Service
+# Kogito Jobs Service
 
 ## Overview
 
-Kogito Job Service is a dedicated lightweight service responsible for scheduling jobs that aim to be fired at a given time.
+Kogito Jobs Service is a dedicated lightweight service responsible for scheduling jobs that aim to be fired at a given time.
 The service does not execute the job itself, it triggers a callback that could be an HTTP request on a given endpoint specified on the job request, or any other callback that could be supported by the service.
 
 ## Architecture
@@ -13,14 +13,14 @@ The service does not execute the job itself, it triggers a callback that could b
 image::images/Job Service Architecture.png[Job Service - Architecture]
 
 
-Basically, the Job Service receives requests of job scheduling and it sends a request at the time specified on the job request, as shown above.
+Basically, the Jobs Service receives requests of job scheduling and it sends a request at the time specified on the job request, as shown above.
 
 The main goal of the service is to work with only active jobs, in this way it only keeps track of the jobs that are scheduled and supposed to be executed, the jobs that achieve a final state are removed from the job service.
 It is important to notice that all job information and transitioning states are pushed to Kogito Data Index where they can be indexed and made available for queries.
 
 ## Technical Overview
 
-The Job Service implementation is based on non-blocking APIs and reactive messaging on the top of Quarkus, which provides the most effective throughput and resource utilization.
+The Jobs Service implementation is based on non-blocking APIs and reactive messaging on the top of Quarkus, which provides the most effective throughput and resource utilization.
 The current scheduling engine is implemented on the top of Vert.x and the external requests are built using a non-blocking HTTP client based on Vert.x.
 
 ### Stack
@@ -32,7 +32,7 @@ The current scheduling engine is implemented on the top of Vert.x and the extern
 
 ### State control
 
-Job service uses an internal state control to manage the job scheduling lifecycle that is detailed on the following diagram:
+Jobs service uses an internal state control to manage the job scheduling lifecycle that is detailed on the following diagram:
 
 image::images/Job Service - States.png[Job Service - States]
 
@@ -42,7 +42,7 @@ image::images/Job Service - States.png[Job Service - States]
 
 ### Job types
 
-Current these are the supported Job types that can be executed by the Job Service.
+Current these are the supported Job types that can be executed by the Jobs Service.
 
 [#time_scheduled]
 #### Time scheduled
@@ -81,7 +81,7 @@ This is the default configuration of Job Service, so if no other configuration i
 
 #### Infinispan
 
-Uses Infinispan as the storage, in this way Job Service can be restarted and it will continue to process any previous schedule job, since all the information is persisted on Infinispan.
+Uses Infinispan as the storage, in this way Jobs Service can be restarted and it will continue to process any previous schedule job, since all the information is persisted on Infinispan.
 To enable this persistence it is necessary to set some configuration parameters, detailed on <<infinispan_configuration>>
 
 [#infinispan_configuration]
