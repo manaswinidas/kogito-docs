@@ -21,7 +21,7 @@
       </ul>
      </li>
      <li><a href="https://github.com/kiegroup/kogito-runtimes/wiki/Data-Index-Service">Data Index Service</a></li>
-     <li><a href="https://github.com/kiegroup/kogito-runtimes/wiki/Job-Service">Job Service</a></li>
+     <li><a href="https://github.com/kiegroup/kogito-runtimes/wiki/Job-Service">Jobs Service</a></li>
     </ul>
   </li>
 </ul>
