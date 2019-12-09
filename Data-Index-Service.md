@@ -318,38 +318,55 @@ Assuming a Travels model is deployed
   }
 }
 ``` 
-##### Filtering
-Filtering the domain-specific cache is, at this stage, open to a simple string, which is based in Infinispan query API. Please note, that we do plan to replace this for a GraphQL typed search, similar to what is provided by the technical cache. This open search allows for some interesting searches such as:
-
-* List all Travels for travellers that first name starts with `ma`.
+##### Metadata
+If needed, it is also possible to correlate domain cache with process and tasks. This is possible via the _metadata_ attribute. Which allows not only retrieving data but also filtering. This attribute is added to all root models deployed in the data index service. To query the metadata, simply select the appropriate attributes under _metadata_ attribute. For example:
 ```graphql
 {
-  Travels(query: "from org.acme.travels.travels.Travels t where t.traveller.firstName:'ma*'") {
+  Travels {
     flight {
       flightNumber
       arrival
       departure
     }
-    hotel {
-      name
-    }
-    traveller {
-      firstName
-    }
-    processInstances {
-      id
-      processId
-      rootProcessId
-      rootProcessInstanceId
-      parentProcessInstanceId
+    metadata {
+      lastUpdate
+      userTasks {
+        name
+      }
+      processInstances {
+        processId
+      }
     }
   }
 }
 ``` 
+
+##### Filtering
+Filtering the domain-specific cache is also based on a type-based system. Allowing typed searches in different attributes, similarly to the parameters used for filtering Processes and Tasks. The attributes available for search depend on the model that is deployed. Below we can demonstrate some capabilities based on the Travel Agency domain.
+
+* List all Travels for travellers that first name starts with `Cri`.
+```graphql
+{
+  Travels(where: {traveller: {firstName: {like: "Cri*"}}}) {
+    flight {
+      flightNumber
+      arrival
+      departure
+    }
+    traveller {
+      email
+    }
+  }
+}
+``` 
+Please note that _like_ operator is case sensitive.
+
+###### Filtering based on metadatada
+
 * List the flight details related to a specific process instance.
 ```graphql
 {
-  Travels(query: "from org.acme.travels.travels.Travels t where t.processInstances.id:'abb9f626-8a54-444d-943a-25b969a2cd1c'") {
+  Travels(where: {metadata: {processInstances: {id: {equal: "1aee8ab6-d943-4dfb-b6be-8ea8727fcdc5"}}}}) {
     flight {
       flightNumber
       arrival
@@ -361,7 +378,7 @@ Filtering the domain-specific cache is, at this stage, open to a simple string, 
 * List the flight details related to a specific user task instance.
 ```graphql
 {
-  Travels(query: "from org.acme.travels.travels.Travels t where t.userTasks.id:'abb9f626-8a54-444d-943a-25b969a2cd1c'") {
+  Travels(where: {metadata: {userTasks: {id: {equal: "de52e538-581f-42db-be65-09e8739471a6"}}}}) {
     flight {
       flightNumber
       arrival
@@ -371,6 +388,35 @@ Filtering the domain-specific cache is, at this stage, open to a simple string, 
 }
 ``` 
 
+##### Sorting
+Similarly to sorting Processes and Tasks, sorting in the domain cache can be done in any of the attributes, including sub-types. The direction of the sort can be defined via its value. For example:
+```graphql
+{
+  Travels(orderBy: {trip: {begin: ASC}}) {
+    flight {
+      flightNumber
+      arrival
+      departure
+    }
+  }
+}
+``` 
+##### Pagination
+Similarly to Processes and Tasks, pagination is defined via _limit_ and _offset_ parameters. For example:
+```graphql
+{
+  Travels(where: {traveller: {firstName: {like: "Cri*"}}}, pagination: {offset: 0, limit: 10}) {
+    flight {
+      flightNumber
+      arrival
+      departure
+    }
+    traveller {
+      email
+    }
+  }
+}
+``` 
 
 #### Loading proto files from the file system
 To bootstrap the service using a set of proto files from a folder, simply pass the following property `kogito.protobuf.folder` and any .proto file contained in the folder will automatically be loaded when the application starts.
