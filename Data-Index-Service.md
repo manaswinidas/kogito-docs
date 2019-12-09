@@ -136,9 +136,11 @@ The provided GraphQL schema also allows for further filtering of the results. A 
 
 ```graphql
 {
-  ProcessInstances(filter: {state: ACTIVE, limit: 10, processId: "travels_sub"}) {
+  ProcessInstances(where: {state: {equal: ACTIVE}}) {
     id
     processId
+    processName
+    start
     state
     variables
   }
@@ -147,9 +149,11 @@ The provided GraphQL schema also allows for further filtering of the results. A 
 
 ```graphql
 {
-  ProcessInstances(filter: {id: ["abb9f626-8a54-444d-943a-25b969a2cd1c", "446fcdb8-aa79-4044-baf9-6c471e0fbe1b"]}) {
+  ProcessInstances(where: {id: {equal: "d43a56b6-fb11-4066-b689-d70386b9a375"}}) {
     id
     processId
+    processName
+    start
     state
     variables
   }
@@ -158,7 +162,7 @@ The provided GraphQL schema also allows for further filtering of the results. A 
 
 ```graphql
 {
-  UserTaskInstances(filter: {actualOwner: "kogito", state: "InProgress"}) {
+  UserTaskInstances(where: {state: {equal: "Ready"}}) {
     id
     name
     actualOwner
@@ -283,7 +287,7 @@ Sample indexed model:
 ```
 /* @Indexed */
 message ProcessInstanceMeta {
-    /* @Field(store = Store.YES, analyze = Analyze.YES, analyzer = @Analyzer(definition = "keyword")) */
+    /* @Field(store = Store.YES) */
     optional string id = 1;
 }
 ```
