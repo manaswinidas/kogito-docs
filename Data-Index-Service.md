@@ -176,10 +176,10 @@ The provided GraphQL schema also allows for further filtering of the results. A 
 
 Depending on the attribute type, some operators are available, for instance:
 - String array argument:  
-    contains: String
-    containsAll: Array of String
-    containsAny: Array of String
-    isNull: Boolean ( true| false )
+*     contains : String
+*    containsAll: Array of String
+*    containsAny: Array of String
+*    isNull: Boolean ( true| false )
 - String argument
     in: Array of String
     like: String
