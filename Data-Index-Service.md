@@ -132,7 +132,7 @@ Some examples:
 ```  
 
 ##### Filtering 
-The provided GraphQL schema also allows for further filtering of the results. A filter attribute is optional and allows multiple combinations. A few examples:
+The provided GraphQL schema also allows for further filtering of the results. A _where_ attribute is optional and allows multiple combinations. A few examples:
 
 ```graphql
 {
@@ -173,6 +173,89 @@ The provided GraphQL schema also allows for further filtering of the results. A 
   }
 }
 ``` 
+
+Depending on the attribute type, some operators are available, for instance:
+- String array argument:  
+    contains: String
+    containsAll: Array of String
+    containsAny: Array of String
+    isNull: Boolean ( true| false )
+- String argument
+    in: Array of String
+    like: String
+    isNull: Boolean ( true| false )
+    equal: String
+- Id argument
+    in: Array of String
+    equal: String
+    isNull: Boolean ( true| false )
+- Boolean argument
+    isNull: Boolean ( true| false )
+    equal: Boolean ( true| false )
+- Numeric argument
+    in: Array of Integer
+    isNull: Boolean
+    equal: Integer
+    greaterThan: Integer
+    greaterThanEqual: Integer
+    lessThan: Integer
+    lessThanEqual: Integer
+    between: Numeric range: from: Integer to: Integer
+- Date argument
+    isNull: Boolean ( true| false )
+    equal: Date Time
+    greaterThan: Date Time
+    greaterThanEqual: Date Time
+    lessThan: Date Time
+    lessThanEqual: Date Time
+    between: Date Range: from: Date Time to: Date Time
+
+##### Sorting
+Sorting of results is possible via _orderBy_ parameter, in there, some of the attributes from either ProcessInstances or UserTaskInstances can be used to sort the results. For each attribute available, it is necessary to also specify the direction os sorting if ASC or DESC.
+Example:
+```graphql
+{
+  ProcessInstances(where: {state: {equal: ACTIVE}}, orderBy: {start: ASC}) {
+    id
+    processId
+    processName
+    start
+    end
+    state
+  }
+}
+``` 
+
+##### Pagination
+Pagination is also supported via a _pagination_ attribute, that allows specifying a limit and offset to the returned data set.
+Example:
+```graphql
+{
+  ProcessInstances(where: {state: {equal: ACTIVE}}, orderBy: {start: ASC}, pagination: {limit: 10, offset: 0}) {
+    id
+    processId
+    processName
+    start
+    end
+    state
+  }
+}
+```
+Multiple attributes can be applied to the _orderBy_ parameter, these will be applied to the database query in the order they are specified in the query filter.
+ Example:
+```graphql
+{
+  UserTaskInstances(where: {state: {equal: "Ready"}}, orderBy: {name: ASC, actualOwner: DESC}) {
+    id
+    name
+    actualOwner
+    description
+    priority
+    processId
+    processInstanceId
+  }
+}
+```
 
 #### Querying the domain cache
 Assuming a Travels model is deployed
