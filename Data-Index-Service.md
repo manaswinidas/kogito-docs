@@ -176,22 +176,26 @@ The provided GraphQL schema also allows for further filtering of the results. A 
 
 Depending on the attribute type, some operators are available, for instance:
 * String array argument:  
-** contains : String
-** containsAll: Array of String
-** containsAny: Array of String
-** isNull: Boolean ( true| false )
+**contains : String
+**containsAll: Array of String
+**containsAny: Array of String
+**isNull: Boolean ( true| false )
+
 * String argument
 ** in: Array of String
 ** like: String
 ** isNull: Boolean ( true| false )
 ** equal: String
+
 * Id argument
 **    in: Array of String
 **    equal: String
 **    isNull: Boolean ( true| false )
+
 * Boolean argument
 **    isNull: Boolean ( true| false )
 **    equal: Boolean ( true| false )
+
 * Numeric argument
 **    in: Array of Integer
 **    isNull: Boolean
@@ -201,6 +205,7 @@ Depending on the attribute type, some operators are available, for instance:
 **    lessThan: Integer
 **    lessThanEqual: Integer
 **    between: Numeric range: from: Integer to: Integer
+
 * Date argument
 **    isNull: Boolean ( true| false )
 **    equal: Date Time
