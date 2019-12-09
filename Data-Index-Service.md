@@ -175,40 +175,40 @@ The provided GraphQL schema also allows for further filtering of the results. A 
 ``` 
 
 Depending on the attribute type, some operators are available, for instance:
-- String array argument:  
-*     contains : String
-*    containsAll: Array of String
-*    containsAny: Array of String
-*    isNull: Boolean ( true| false )
-- String argument
-    in: Array of String
-    like: String
-    isNull: Boolean ( true| false )
-    equal: String
-- Id argument
-    in: Array of String
-    equal: String
-    isNull: Boolean ( true| false )
-- Boolean argument
-    isNull: Boolean ( true| false )
-    equal: Boolean ( true| false )
-- Numeric argument
-    in: Array of Integer
-    isNull: Boolean
-    equal: Integer
-    greaterThan: Integer
-    greaterThanEqual: Integer
-    lessThan: Integer
-    lessThanEqual: Integer
-    between: Numeric range: from: Integer to: Integer
-- Date argument
-    isNull: Boolean ( true| false )
-    equal: Date Time
-    greaterThan: Date Time
-    greaterThanEqual: Date Time
-    lessThan: Date Time
-    lessThanEqual: Date Time
-    between: Date Range: from: Date Time to: Date Time
+* String array argument:  
+**     contains : String
+**    containsAll: Array of String
+**    containsAny: Array of String
+**    isNull: Boolean ( true| false )
+* String argument
+**    in: Array of String
+**    like: String
+**    isNull: Boolean ( true| false )
+**    equal: String
+* Id argument
+**    in: Array of String
+**    equal: String
+**    isNull: Boolean ( true| false )
+* Boolean argument
+**    isNull: Boolean ( true| false )
+**    equal: Boolean ( true| false )
+* Numeric argument
+**    in: Array of Integer
+**    isNull: Boolean
+**    equal: Integer
+**    greaterThan: Integer
+**    greaterThanEqual: Integer
+**    lessThan: Integer
+**    lessThanEqual: Integer
+**    between: Numeric range: from: Integer to: Integer
+* Date argument
+**    isNull: Boolean ( true| false )
+**    equal: Date Time
+**    greaterThan: Date Time
+**    greaterThanEqual: Date Time
+**    lessThan: Date Time
+**    lessThanEqual: Date Time
+**    between: Date Range: from: Date Time to: Date Time
 
 ##### Sorting
 Sorting of results is possible via _orderBy_ parameter, in there, some of the attributes from either ProcessInstances or UserTaskInstances can be used to sort the results. For each attribute available, it is necessary to also specify the direction os sorting if ASC or DESC.
