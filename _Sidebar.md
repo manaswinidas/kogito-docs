@@ -20,7 +20,12 @@
 <li><a href="https://github.com/kiegroup/kogito-runtimes/wiki/Process-Instance-Management">Management</a>  </li>
       </ul>
      </li>
-     <li><a href="https://github.com/kiegroup/kogito-runtimes/wiki/Data-Index-Service">Data Index Service</a></li>
+      <li><a href="https://github.com/kiegroup/kogito-runtimes/wiki/Data-Index-Service">Data Index Service</a>
+        <ul>
+            <li><a href="https://github.com/kiegroup/kogito-runtimes/wiki/Data-Index-Security">Security</a>
+            </li>
+        </ul>
+     </li>
      <li><a href="https://github.com/kiegroup/kogito-runtimes/wiki/Job-Service">Jobs Service</a></li>
     </ul>
   </li>
