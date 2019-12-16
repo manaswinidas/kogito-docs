@@ -26,7 +26,7 @@
             </li>
         </ul>
      </li>
-     <li><a href="https://github.com/kiegroup/kogito-runtimes/wiki/Job-Service">Jobs Service</a></li>
+     <li><a href="https://github.com/kiegroup/kogito-runtimes/wiki/Jobs-Service">Jobs Service</a></li>
     </ul>
   </li>
 </ul>
