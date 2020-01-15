@@ -2,6 +2,7 @@ Looking for slides to present about Kogito?
 * 1-slide overview
 * 10 min overview
 * a more complete 30min presentation
+
 Take a look [at our slidedeck here](https://docs.google.com/presentation/d/10pZD2Jnw0D2bkhzFkxL9aV3dS6pc_98-2VOmNx4pHsk).
 
 
@@ -12,15 +13,26 @@ Feel free to submit upcoming events (presentations, workshops, etc.) related to 
 
 ## Upcoming events related to Kogito
 
-**TDC - The Developers Conference 2019**: Business Automation in the Cloud with Kogito and Quarkus (Ricardo Zanini, Filippe Spolti)
+**Red Hat Summit 2020**
 
-October 11th, 2019
+April 27-29, 2020
 
-Recife, Brazil
+San Francisco, California
 
-[Link to presentation details](http://www.thedevelopersconference.com.br/tdc/2019/recife/trilha-cloud-e-containers#descricao-122)
-
+https://www.redhat.com/en/summit
 ***
+
+**bpmNEXT 2020**
+
+April 27-29, 2020
+
+Santa Barbara, California
+
+https://bpmnext.com/
+***
+
+
+## Past events related to Kogito
 
 **Devoxx Belgium 2019**: Event-driven business automation powered by cloud native Java (Mario Fusco, Edoardo Vacchi, Maciej Swiderski)
 
@@ -30,14 +42,16 @@ Antwerp, Belgium
 
 [Link to presentation details](https://devoxx.be/talk/?id=44155)
 
+***
+**TDC - The Developers Conference 2019**: Business Automation in the Cloud with Kogito and Quarkus (Ricardo Zanini, Filippe Spolti)
+
+October 11th, 2019
+
+Recife, Brazil
+
+[Link to presentation details](http://www.thedevelopersconference.com.br/tdc/2019/recife/trilha-cloud-e-containers#descricao-122)
 
 ***
-
-
-
-
-## Past events related to Kogito
-
 **DevNation Live**: Event-driven business automation powered by cloud native Java (Maciej Swiderski)
 
 September 5th, 2019
