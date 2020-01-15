@@ -13,6 +13,15 @@ Feel free to submit upcoming events (presentations, workshops, etc.) related to 
 
 ## Upcoming events related to Kogito
 
+**DevConf.CZ: Kogito Workshop - From zero to cloud ready (Ricardo Zanini, Cristiano Nicolai)**
+
+January 24-26, 2020
+
+Brno, Czech Republic
+
+https://devconfcz2020a.sched.com/event/YOrQ/kogito-workshop-from-zero-to-cloud-ready
+
+***
 **Red Hat Summit 2020**
 
 April 27-29, 2020
