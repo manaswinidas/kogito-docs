@@ -10,7 +10,9 @@ The goal is to have a new minor community release every month.
 
 ### Main themes of the release 
 
-* operator to provision jobs service
+* Operator to provision jobs service
+* Operator to provision Keycloak for SSO (only deployment, no configuration details)
+* Operator to register generated protobuf files for services with persistence enabled into Data Index Service
 
 # 0.8.0
 
@@ -19,7 +21,9 @@ The goal is to have a new minor community release every month.
 ### Main themes of the release 
 
 * process management console for process administrators
-* operator to provision SSO, management console
+* Operator to provision Management Console
+* Operator to configure Keycloak (SSO) to work with Data Index Service
+* Operator to integrate Jobs Service and Data Index Service through messaging (providing Kafka)
 
 
 # 1.0.0
