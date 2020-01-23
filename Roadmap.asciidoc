@@ -30,6 +30,9 @@ The goal is to have a new minor community release every month.
 * Operator to integrate Jobs Service and Data Index Service through messaging (providing Kafka)
 * Process variable tagging
 * Serverless workflow spec integration - basic capabilities
+* Improved DMN integration in BPMN
+* Support declaring Rule Units using declared type syntax
+* Support configuring Rule Units using properties
 
 # 1.0.0
 
