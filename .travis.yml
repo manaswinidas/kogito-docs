@@ -1,0 +1,15 @@
+script:
+- |-
+  git config user.name "manaswinidas"
+  git config user.email "dasmanaswini10@gmail.com"
+  git remote remove origin
+  git remote add origin https://$GITHUB_API_KEY@github.com/manaswinidas/kogito-docs.git > /dev/null 2>&1
+  git remote add upstream https://$GITHUB_API_KEY@github.com/manaswinidas/kogito-docs.wiki.git > /dev/null 2>&1
+  git fetch origin
+  git fetch upstream
+  git merge upstream/master --no-edit
+  git push origin HEAD:master > /dev/null 2>&1
+  git push upstream HEAD:master > /dev/null 2>&1
+env:
+  global:
+    secure: IE2c9y34wBaRYBatl+411MsHAT0EX4rRjLlJ3dgodeRa58NN7rr5Ii6LWPyppozeAqKY9nF5xukbEyEYeXySXRDvuNXUoTTDjETvjHyBS3r8lwRIzvIxxQGNhgS8nOcByJx35DukhZOCvVAt2McSorC3KdmiU8Nt5oYvNOKQSuwYSx8QpnKJrXfOpaBKcJ1rY3EUbvLFriSTf7b1C2aDRi6eLXWhoUyqfMo5vZTmzzdtARuhY7bLogdT1Hpf5yCxezK7F607w3gdtmOirVfJHJezGtOneM1HfLI71h/JbRqWA6za8zzwoy9k/FGk+hSeUpEfLEAaJvqtiOddNoJwLx4LS0NzJPRROpex170wBPMHcPd8cN5swBB7IT24Q5lc78Akh7KnV+nUfej7DbwGu2jlqFfMcwLmMUBvDspNNFoPLC26M9F1ygCbgQ+X60IEZ98CVfTwRnkc7c7D7oTovpQvZQGedegcc92qiNZlA/UPjJW3/dr5wbl/N6zmUh5D10awqKgPucPaiNKFynim5Y9uBu6ebeDEuggyX5WPv2DONJ//TYH9hp2baONjj7Wv2h7QIixIv+GxlDgFW774BTukdThWX4MD+mjdG/s+cYrm3SHHFLjYSZrRE4YL6SoaCVBrznNyvRBLxizmqxCIj2W6cZA3gYkar3StEdbHUpU=
