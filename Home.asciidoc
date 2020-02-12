@@ -16,4 +16,4 @@ It originates from well known Open Source projects (https://drools.org[Drools], 
 
 = Getting started
 
-Take a look at our https://kogito.kie.org/get-started/[getting started guide] and let u know what you think!
+Take a look at our https://kogito.kie.org/get-started/[getting started guide] and let us know what you think!
