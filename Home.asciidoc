@@ -1,6 +1,6 @@
 image::https://design.jboss.org/kogito/logo/final/PNG/kogito_logo_rgb_color_horizontal_default_1280px.png[Kogito logo]
 
-= Overview
+= Overvie
 
 *Kogito* is *cloud-native business automation* for building intelligent applications.  Build cloud-native applications by leveraging business processes and rules to extract the business logic from your code.  Kogito takes advantage of the many benefits of the cloud because it was designed from the ground up to target that environment.
 
