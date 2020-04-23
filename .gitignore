@@ -1,5 +1,6 @@
 target/
 /local
+.history/
 
 # Eclipse, Netbeans and IntelliJ files
 
